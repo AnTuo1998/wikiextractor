@@ -550,9 +550,9 @@ def main():
                         help="write output in json format instead of the default <doc> format")
     groupO.add_argument("--clean", action="store_true",
                         help="only store the text and split the text into 100-word chunk")
-    groupO.add_arugment("--tokenizer", default="bert-base-cased",
+    groupO.add_argument("--tokenizer", default="bert-base-cased",
                         help="huggingface tokenizer to split the text")
-    groupO.add_arugment("--chunk_size", default=100,
+    groupO.add_argument("--chunk_size", default=100,
                         help="splitted chunk size")
 
 
