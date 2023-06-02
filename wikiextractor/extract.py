@@ -978,7 +978,8 @@ class Extractor():
         text = '\n'.join(text)
         
         if self.clean_version:
-            header += self.title + '\n'
+            header = self.title + '\n'
+            out.write(header)
             splitted_text = self.text_splitter.split_text(text)
             for chunk_text in splitted_text:
                 out.write(chunk_text + '\n')
