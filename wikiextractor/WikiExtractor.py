@@ -548,6 +548,13 @@ def main():
                         help="compress output files using bzip")
     groupO.add_argument("--json", action="store_true",
                         help="write output in json format instead of the default <doc> format")
+    groupO.add_argument("--clean", action="store_true",
+                        help="only store the text and split the text into 100-word chunk")
+    groupO.add_arugment("--tokenizer", default="bert-base-cased",
+                        help="huggingface tokenizer to split the text")
+    groupO.add_arugment("--chunk_size", default=100,
+                        help="splitted chunk size")
+
 
     groupP = parser.add_argument_group('Processing')
     groupP.add_argument("--html", action="store_true",
@@ -583,7 +590,16 @@ def main():
     Extractor.HtmlFormatting = args.html
     if args.html:
         Extractor.keepLinks = True
+    Extractor.clean_version = args.clean
     Extractor.to_json = args.json
+
+    if args.clean:
+        from transformers import AutoTokenizer
+        from langchain.text_splitter import CharacterTextSplitter
+        tokenizer = AutoTokenizer.from_pretrained(args.tokenizer)
+        text_splitter = CharacterTextSplitter.from_huggingface_tokenizer(
+            tokenizer, chunk_size=args.chunk_size, chunk_overlap=0)
+        Extractor.text_splitter = text_splitter
 
     try:
         power = 'kmg'.find(args.bytes[-1].lower()) + 1

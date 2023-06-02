@@ -973,10 +973,19 @@ class Extractor():
         logging.debug("%s\t%s", self.id, self.title)
         text = ''.join(self.page)
         text = self.clean_text(text, html_safe=html_safe)
+        if text == '':
+            return
+        text = '\n'.join(text)
+        
+        if self.clean_version:
+            header += self.title + '\n'
+            splitted_text = self.text_splitter.split_text(text)
+            for chunk_text in splitted_text:
+                out.write(chunk_text + '\n')
 
-        if self.to_json:
+        elif self.to_json:
             json_data = {
-		'id': self.id,
+		        'id': self.id,
                 'revid': self.revid,
                 'url': self.url,
                 'title': self.title,
