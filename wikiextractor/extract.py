@@ -973,10 +973,9 @@ class Extractor():
         logging.debug("%s\t%s", self.id, self.title)
         text = ''.join(self.page)
         text = self.clean_text(text, html_safe=html_safe)
-        if text == self.title or len(text) < 20:
-            logging.info("%s\t%s\t%s", text, self.id, self.title)
-            return
         text = '\n'.join(text)
+        if text == self.title or len(text) < 20:
+            return
         
         if self.clean_version:
             header = self.title + '\n'
