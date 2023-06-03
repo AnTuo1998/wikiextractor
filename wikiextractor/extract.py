@@ -973,7 +973,7 @@ class Extractor():
         logging.debug("%s\t%s", self.id, self.title)
         text = ''.join(self.page)
         text = self.clean_text(text, html_safe=html_safe)
-        if text == '':
+        if text == self.title or len(text) < 20:
             return
         text = '\n'.join(text)
         
