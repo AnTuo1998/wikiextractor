@@ -552,7 +552,7 @@ def main():
                         help="only store the text and split the text into 100-word chunk")
     groupO.add_argument("--tokenizer", default="bert-base-cased",
                         help="huggingface tokenizer to split the text")
-    groupO.add_argument("--chunk_size", default=100,
+    groupO.add_argument("--chunk_size", default=250,
                         help="splitted chunk size")
 
 
@@ -598,7 +598,7 @@ def main():
         from langchain.text_splitter import CharacterTextSplitter
         tokenizer = AutoTokenizer.from_pretrained(args.tokenizer)
         text_splitter = CharacterTextSplitter.from_huggingface_tokenizer(
-            tokenizer, chunk_size=args.chunk_size, chunk_overlap=0)
+            tokenizer, chunk_size=args.chunk_size, chunk_overlap=0, separator=".")
         Extractor.text_splitter = text_splitter
 
     try:
