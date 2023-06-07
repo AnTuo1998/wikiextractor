@@ -550,6 +550,8 @@ def main():
                         help="write output in json format instead of the default <doc> format")
     groupO.add_argument("--clean", action="store_true",
                         help="only store the text and split the text into 100-word chunk")
+    groupO.add_argument("--clean_short", action="store_true",
+                        help="only store the text and save the first 100-word chunk")
     groupO.add_argument("--tokenizer", default="bert-base-cased",
                         help="huggingface tokenizer to split the text")
     groupO.add_argument("--chunk_size", default=250,
@@ -591,9 +593,10 @@ def main():
     if args.html:
         Extractor.keepLinks = True
     Extractor.clean_version = args.clean
+    Extractor.short_version = args.clean_short
     Extractor.to_json = args.json
 
-    if args.clean:
+    if args.clean or args.clean_short:
         from transformers import AutoTokenizer
         from langchain.text_splitter import CharacterTextSplitter
         tokenizer = AutoTokenizer.from_pretrained(args.tokenizer)
