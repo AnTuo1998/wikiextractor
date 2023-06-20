@@ -607,7 +607,7 @@ def main():
     try:
         power = 'kmg'.find(args.bytes[-1].lower()) + 1
         # 0 bytes means put a single article per file.
-        file_size = 0 if args.bytes == '0' else int(args.bytes[:-1]) * 1024 ** power
+        file_size = 0 if args.bytes == '0' else float(args.bytes[:-1]) * 1024 ** power
         if file_size and file_size < minFileSize:
             raise ValueError()
     except ValueError:
