@@ -979,12 +979,16 @@ class Extractor():
         
         if self.short_version:
             splitted_text = self.text_splitter.split_text(text)
+            splitted_text = [chunk_text for chunk_text in splitted_text 
+                             if len(chunk_text) > 20]
             out.write(splitted_text[0] + '\n')
 
         elif self.clean_version:
             # header = self.title + '\n'
             # out.write(header)
             splitted_text = self.text_splitter.split_text(text)
+            splitted_text = [chunk_text for chunk_text in splitted_text 
+                             if len(chunk_text) > 20]
             for chunk_text in splitted_text:
                 out.write(chunk_text + '\n')
 
